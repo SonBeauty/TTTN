@@ -9,6 +9,7 @@ import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import UserManagement from "./pages/userList/UserManagement";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/users">
-            <UserList />
+            <UserManagement />
           </Route>
           <Route path="/user/:userId">
             <User />

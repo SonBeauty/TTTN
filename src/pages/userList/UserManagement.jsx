@@ -7,63 +7,60 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AiFillEdit, AiTwotoneDelete } from "react-icons/ai";
 import User from "../user/User";
+import UserList from "./UserList";
 
-export default function UserList({users, onSelect, onDelete}) {
+export default function UserManagement() {
   // const [data, setData] = useState(userRows);
-const handleUpdate = (id)=>{
-  onSelect(id)
-}
-const handleDelete = async(id)=>{
-  try {
-    await axios.delete(
-      `https://62dd528679b9f8c30aa6ec7e.mockapi.io/TTTN_user/${id}`
-    )
-    onDelete()
-  } catch (error) {
-    console.log(error)
-  }
-}
+  const [data, setData] = useState([]);
+  const [userDetail, setUserDetail] = useState([]);
+  const [show, setShow] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      const { data } = await axios.get(
+        "https://62dd528679b9f8c30aa6ec7e.mockapi.io/TTTN_user"
+      );
+      // setData(data);
+      console.log(data);
+      setData(data);
+    } catch (error) {}
+  };
+
+  const fetchUserDetail = async (userId) => {
+    try {
+      const { data } = await axios.get(
+        `https://62b9626541bf319d227b2b79.mockapi.io/user/${userId}`
+      );
+      // setData(data);
+      console.log(data);
+      setUserDetail(data);
+    } catch (error) {}
+  };
+
+  const setLocal = async (userId) => {
+    try {
+      const { data } = await axios.get(
+        `https://62dd528679b9f8c30aa6ec7e.mockapi.io/TTTN_user/${userId}`
+      );
+      const {name, email, id, phoneNumber, birthDay, typeUser} = data
+      localStorage.setItem('user', name)
+      localStorage.setItem('email', email)
+      localStorage.setItem('id', id)
+      localStorage.setItem('phoneNumber', phoneNumber)
+      localStorage.setItem('birthDay', birthDay)
+      localStorage.setItem('typeUser', typeUser)
+    } catch (error) {}
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <table className="table">
-      <thead className="bg-warning">
-        <tr>
-          <th scope="col">Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Type User</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => {
-          return (
-            <>
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.phoneNumber}</td>
-                <td>{user.typeUser}</td>
-                <td>
-                  <Link to={{ pathname: "/user/" + user.id }}>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleUpdate(user.id)}
-                    >
-                      <AiFillEdit />
-                    </button>
-                  </Link>
-                  <button className="btn btn-danger m-2" onClick={()=> handleDelete(user.id)}>
-                    <AiTwotoneDelete />
-                  </button>
-                </td>
-              </tr>
-            </>
-          );
-        })}
-      </tbody>
-    </table>
+    <>
+      {show && <User users={userDetail} handleUpdate={fetchUser} />}
+
+      <UserList users={data} onSelect={setLocal} onDelete={fetchUser}/>
+    </>
   );
   // const columns = [
   //   { field: "id", headerName: "ID", width: 90 },
