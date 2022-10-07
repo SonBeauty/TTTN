@@ -32,9 +32,9 @@ function Login() {
   return (
     <div className="container">
       {home ? (
-        <form onSubmit={handleLogin}>
-          <h3 className="text-center text-primary">LogIn</h3>
-          <div className="form-group">
+        <form className="bg-light" onSubmit={handleLogin}>
+          <h3 className="text-center text-primary">Login</h3>
+          <div className="form-group mb-3 mx-5">
             <label>Email</label>
             <input
               type="email"
@@ -44,7 +44,7 @@ function Login() {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group mb-3 mx-5">
             <label>Password</label>
             <input
               type="password"
@@ -54,13 +54,13 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-dark btn-lg btn-block">
+          <button type="submit" className="mx-5 btn btn-dark btn-lg btn-block">
             Login
           </button>
 
           {flag && (
             <Alert color="primary" variant="warning">
-              Tài khoản hoặc mật khẩu không đúng, vui lòng đăng nhập lại!!
+              <span className="mx-5">Tài khoản hoặc mật khẩu không đúng, vui lòng đăng nhập lại!! </span> 
             </Alert>
           )}
         </form>

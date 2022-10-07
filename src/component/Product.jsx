@@ -16,7 +16,7 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);
-      const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+      const response = await fetch(`https://62dd528679b9f8c30aa6ec7e.mockapi.io/TTTN_product/${id}`);
       console.log(response);
       setProduct(await response.json());
       setLoading(false);

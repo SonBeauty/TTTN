@@ -12,7 +12,8 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-      const resonse = await fetch("https://fakestoreapi.com/products");
+      // const resonse = await fetch("https://fakestoreapi.com/products");
+      const resonse = await fetch("https://62dd528679b9f8c30aa6ec7e.mockapi.io/TTTN_product");
       if (componentMounted) {
         setData(await resonse.clone().json());
         setFilter(await resonse.json());
